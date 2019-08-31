@@ -1,7 +1,25 @@
 # Write a Python class to convert an integer to a roman numeral
+from time import time
+import random
+
+my_randoms = random.sample(range(2_001), 2_000)
+# print(my_randoms)
+
+s = time()
 
 
 class convertRoman:
+    def __init__(self):
+        self._numerals = {
+            1: "I",
+            5: "V",
+            10: "X",
+            50: "L",
+            100: "C",
+            500: "D",
+            1000: "M",
+        }
+
     def convert(self, value=None):
         if type(value) is not int:
             print("Please insert an integer")
@@ -9,78 +27,76 @@ class convertRoman:
             return self._convert(value)
 
     def _convert(self, value):
-        parsedValue = list(str(value))[::-1]
-        alowedDeviation = [-1, 0, 1, 2, 3]
-        # print(parsedValue)
-        romanNum = []
-        for i, n in enumerate(parsedValue):
-            if n == 0:
-                numeral = _getRoman(i, 0, n)
-            else:
-                devFrom1, devFrom5, devFrom10 = [int(n) - v for v in [1, 5, 10]]
+        alowedDeviation = (-1, 0, 1, 2, 3)
+        romanNum = ""
+        i = 0
 
-                if devFrom1 in alowedDeviation and devFrom1 != 3:
-                    numeral = self._getRoman(i, devFrom1, 1)
-                elif devFrom5 in alowedDeviation:
-                    numeral = self._getRoman(i, devFrom5, 5)
-                else:
-                    numeral = self._getRoman(i, devFrom10, 10)
-            romanNum.insert(0, numeral)
+        while value > 0:
 
-        return "".join(romanNum)
+            digit = value % 10
+
+            if digit != 0:
+
+                for multip in [1, 5, 10]:
+                    dev = digit - multip
+                    if dev in alowedDeviation and multip * dev != 3:
+                        numeral = self._getRoman(i, dev, multip)
+                        break
+
+                romanNum = numeral + romanNum
+
+            i += 1
+            value = (value - digit) // 10
+
+        return romanNum
 
     def _getRoman(self, iteration, deviation, target):
-        numerals = {1: "I", 5: "V", 10: "X", 50: "L", 100: "C", 500: "D", 1000: "M"}
-        num = 10 ** (iteration)
-        index = target * num
-        # print(index)
-        apendix = numerals[num]
 
-        if deviation == 0 and target != 0:
-            return numerals[index]
-        elif deviation == -1 and target != 1:
-            return str(apendix + numerals[index])
-        elif deviation == 1:
-            return str(numerals[index] + apendix)
-        elif deviation == 2:
-            # apendix = numerals[index / 5]
-            return str(numerals[index] + apendix + apendix)
-        elif deviation == 3:
-            # apendix = numerals[index / 5]
-            return str(numerals[index] + apendix + apendix + apendix)
+        coef = 10 ** (iteration)
+        index = target * coef
+        apendix = self._numerals[coef]
+
+        if deviation != -1:
+            return self._numerals[index] + apendix * deviation
         else:
-            return ""
+            return apendix + self._numerals[index]
 
 
 Roman = convertRoman()
+# print(Roman.convert(394))
+for _ in range(0, 600):
+    [Roman.convert(elem) for elem in my_randoms]
 
-print(Roman.convert(894))
+e = time()
+
+print("Method 1 -> Results in: ", e - s)
 
 
 # ---------------------Solution-------------------
-# class py_solution:
-#     def int_to_Roman(self, num):
-#         val = [
-#             1000, 900, 500, 400,
-#             100, 90, 50, 40,
-#             10, 9, 5, 4,
-#             1
-#             ]
-#         syb = [
-#             "M", "CM", "D", "CD",
-#             "C", "XC", "L", "XL",
-#             "X", "IX", "V", "IV",
-#             "I"
-#             ]
-#         roman_num = ''
-#         i = 0
-#         while  num > 0:
-#             for _ in range(num // val[i]):
-#                 roman_num += syb[i]
-#                 num -= val[i]
-#             i += 1
-#         return roman_num
 
+s = time()
+
+
+class py_solution:
+    def int_to_Roman(self, num):
+        val = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
+        syb = ["M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"]
+        roman_num = ""
+        i = 0
+        while num > 0:
+            for _ in range(num // val[i]):
+                roman_num += syb[i]
+                num -= val[i]
+            i += 1
+        return roman_num
+
+
+for _ in range(0, 600):
+    [py_solution().int_to_Roman(elem) for elem in my_randoms]
+e = time()
+
+
+print("Method 2 -> Results in: ", e - s)
 
 # print(py_solution().int_to_Roman(1))
 # print(py_solution().int_to_Roman(4000))
