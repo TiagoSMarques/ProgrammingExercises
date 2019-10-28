@@ -32,15 +32,12 @@ class convertRoman:
         i = 0
 
         while value > 0:
-
             digit = value % 10
-
             if digit != 0:
-
-                for multip in [1, 5, 10]:
-                    dev = digit - multip
-                    if dev in alowedDeviation and multip * dev != 3:
-                        numeral = self._getRoman(i, dev, multip)
+                for target in [1, 5, 10]:
+                    dev = digit - target
+                    if dev in alowedDeviation and target * dev != 3:
+                        numeral = self._getRoman(i, dev, target)
                         break
 
                 romanNum = numeral + romanNum

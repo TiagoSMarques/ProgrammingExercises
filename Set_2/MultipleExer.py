@@ -122,4 +122,6 @@ print("Tree height= " + str(tree.height()))
 print(tree.search(2))
 print(tree.search(30))
 
-# Recursive function like Fibonacci
+
+# ----------------------------------------------------------------------------
+
