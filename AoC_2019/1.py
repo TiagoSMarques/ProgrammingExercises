@@ -39,7 +39,7 @@ print("Ex. 1: ", fuelTotal)
 # What is the sum of the fuel requirements for all of the modules on your spacecraft when also taking into account the mass of the added fuel? (Calculate the fuel requirements for each module separately, then add them all up at the end.)
 
 
-def recursiveFuel(Module_Mass):
+def fuelMass(Module_Mass):
     fuelRequired = 0
     newMass = Module_Mass
     while True:
@@ -50,7 +50,20 @@ def recursiveFuel(Module_Mass):
     return fuelRequired
 
 
-# fuelRequired = recursiveFuel(100756)
+def recursiveFuel(module_mass):
+    neededFuel = getFuelNeeded(module_mass)
+    if neededFuel <= 0:
+        return 0
+    else:
+        return neededFuel + recursiveFuel(neededFuel)
+
+
+# test = 100756
+# fuelRequired = recursiveFuel(test)
+# fuelRequired2 = rFuel(test)
+
+# print("1: ", fuelRequired)
+# print("2: ", fuelRequired2)
 
 fuelTotal2 = 0
 with open("1_input.txt") as iV:
