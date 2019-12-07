@@ -12,22 +12,53 @@ with open("2_input.txt") as puzzleIn:
     for line in puzzleIn:
         arrayIn = [int(a) for a in line.split(",")]
 
-arrayIn_Copy = arrayIn
-for opcodePos in range(0, len(arrayIn), 4):
-    # print("opcode: ", arrayIn[opcode])
-    opcode = arrayIn[opcodePos]
-    # print(opcode)
-    if opcode == 1:
-        arrayIn[arrayIn[opcodePos + 3]] = (
-            arrayIn[arrayIn[opcodePos + 1]] + arrayIn[arrayIn[opcodePos + 2]]
-        )
-    elif opcode == 2:
-        arrayIn[arrayIn[opcodePos + 3]] = (
-            arrayIn[arrayIn[opcodePos + 1]] * arrayIn[arrayIn[opcodePos + 2]]
-        )
-    elif opcode == 99:
-        print("Finished Running Intcode!")
-        print("Final State: ", arrayIn[0])
+# -------------------------------------Part 1------------------------
+
+
+def findFirstValue(InCopy):
+    for opcodePos in range(0, len(InCopy), 4):
+        # print("opcode: ", InCopy[opcode])
+        opcode = InCopy[opcodePos]
+        # print(opcode)
+        if opcode == 1:
+            InCopy[InCopy[opcodePos + 3]] = (
+                InCopy[InCopy[opcodePos + 1]] + InCopy[InCopy[opcodePos + 2]]
+            )
+        elif opcode == 2:
+            InCopy[InCopy[opcodePos + 3]] = (
+                InCopy[InCopy[opcodePos + 1]] * InCopy[InCopy[opcodePos + 2]]
+            )
+        elif opcode == 99:
+            # print("Finished Running Intcode!")
+            return InCopy[0]
+
+        else:
+            raise ValueError("Invalid opcode!")
+
+
+part1 = arrayIn.copy()
+print("Ex 1: ", findFirstValue(part1))
+
+# -------------------------------Parte 2--------------------
+end = 0
+
+for noun in range(0, 100):
+    for verb in range(0, 100):
+        arrayIn_Copy = arrayIn.copy()
+
+        arrayIn_Copy[1] = noun
+        arrayIn_Copy[2] = verb
+
+        firstElem = findFirstValue(arrayIn_Copy)
+
+        if firstElem == 19690720:
+            end = 1
+            # print("Fisrt Element: ", firstElem)
+            # print("noun: ", noun)
+            # print("verb: ", verb)
+            print("Ex 2: ", 100 * noun + verb)
+            break
+
+    if end == 1:
         break
-    else:
-        print("Invalid opcode!")
+
