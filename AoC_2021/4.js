@@ -42,31 +42,45 @@ function findNumIndex(board, num) {
 }
 
 
-let part1 = 0
+let part1 = [];
+// let parte2 = 0
 
 // fills each board with the given number and marks the in the "positions" array
 function fillBoard(numberGuess, boards) {
 
     let indexes = []
-    for (let b = 0; b < boards.length; b++) {
-        indexes = findNumIndex(boards[b], numberGuess);
-        if (indexes != undefined) {
+    if (boards.length != 0) {
+        for (let b = 0; b < boards.length; b++) {
+            indexes = findNumIndex(boards[b], numberGuess);
+            if (indexes != undefined) {
 
-            positions[b].countRow[indexes[0]] += 1;
-            positions[b].countCol[indexes[1]] += 1;
-            positions[b].numbersSum += numberGuess
+                positions[b].countRow[indexes[0]] += 1;
+                positions[b].countCol[indexes[1]] += 1;
+                positions[b].numbersSum += numberGuess
 
-            if (positions[b].countRow[indexes[0]] == 5 || positions[b].countCol[indexes[1]] == 5) {
-                console.log("Board ", b, " wins!!")
-                part1 = (positions[b].TotalSum - positions[b].numbersSum) * numberGuess;
-                console.log(part1);
-                throw BreakException
+                if (positions[b].countRow[indexes[0]] == 5 || positions[b].countCol[indexes[1]] == 5) {
+                    // console.log("Board ", b, " wins!!")
+                    console.log(numberGuess);
+                    part1.push((positions[b].TotalSum - positions[b].numbersSum) * numberGuess);
+                    boards.splice(b, 1)
+                    // console.log(part1);
+                    // console.log(boards[b])
+
+                    break;
+                }
             }
         }
+        console.log(boards);
+    } else {
+        console.log("Aqui");
+        throw BreakException
     }
 }
 
 //iterate through numbers
+// numbers.forEach(function (numberGuess) {
+//     fillBoard(numberGuess, boards)
+// });
 try {
     numbers.forEach(function (numberGuess) {
         fillBoard(numberGuess, boards)
@@ -76,5 +90,6 @@ try {
     if (e !== BreakException) throw e;
 
 }
+console.log(part1);
 
 console.timeEnd("a")
