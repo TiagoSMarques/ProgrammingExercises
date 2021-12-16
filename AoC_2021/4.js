@@ -2,7 +2,6 @@ const {
     readFileSync
 } = require("fs");
 
-console.time("a")
 
 const inputData = readFileSync("4.txt", 'utf-8').split('\n\n');
 
@@ -29,6 +28,7 @@ for (let i = 1; i < inputData.length; i++) {
     }
 }
 
+
 // Find the coordenates of the number on the board
 function findNumIndex(board, num) {
     let ind = undefined;
@@ -44,7 +44,7 @@ function findNumIndex(board, num) {
 
 let part1 = 0
 
-// fills each board with the given number and marks the in the "positions" array
+// fills each board with the given numbers and marks the in the "positions"
 function fillBoard(numberGuess, boards) {
 
     let indexes = []
@@ -66,7 +66,6 @@ function fillBoard(numberGuess, boards) {
     }
 }
 
-//iterate through numbers
 try {
     numbers.forEach(function (numberGuess) {
         fillBoard(numberGuess, boards)
@@ -77,4 +76,7 @@ try {
 
 }
 
-console.timeEnd("a")
+
+
+// console.log(boards);
+// console.log(positions);
