@@ -2,21 +2,35 @@ const path = require("path");
 const fs = require("fs");
 
 console.time("a")
+let header = []
 
 function isData(row) {
-    return !isNaN(parseInt(row[0]));
+    if (!isNaN(parseInt(row[0]))) {
+        return true
+    } else {
+        header.push(row + "\r\n")
+    }
 }
 
 function rotZ(value) {
-    return value + (90 - value) * 2
+    let tz = value + (90 - value) * 2
+    if (tz > 180) {
+        tz = tz - 360
+    }
+    return tz
 }
 
 function add180(val) {
-    return val + 180
+    let tx = val + 180
+    if (tx > 180) {
+        tx = tx - 360
+    }
+    return tx
 }
+const file = "CamBRUSELAS_N_RIGHT_B2T_01_path";
 
 const inputData = fs
-    .readFileSync(path.join(__dirname, "CamBRUSELAS_N_RIGHT_B2T_01_path.mdl"), 'utf-8')
+    .readFileSync(path.join(__dirname, file + ".mdl"), 'utf-8')
     .split("\r\n")
     .filter(isData)
 
@@ -32,15 +46,6 @@ let c = 0;
 
 let currQuadrant = 1
 let targetQuadrant = 4
-
-switch (steps) {
-    case value:
-
-        break;
-
-    default:
-        break;
-}
 
 let transfPos = [1 - 2 * a, 1 - 2 * b, 1 - 2 * c]
 
@@ -63,28 +68,29 @@ for (let pos = 0; pos < positions.length; pos++) {
     } else {
         console.log("problema");
     }
+}
 
+const newfile = file + "_new" + ".mdl"
+fs.writeFileSync(newfile, "")
+try {
+    for (let g = 0; g < header.length; g++) {
+        fs.writeFileSync(newfile, header[g], {
+            flag: 'a'
+        })
+        if (g == header.length - 4) {
+            for (let rr = 0; rr < positions.length; rr++) {
+                let line = ""
+                positions[rr].forEach(element => {
+                    line += element + ","
+                });
+                fs.writeFileSync(newfile, line.slice(0, -1) + "\r\n", {
+                    flag: 'a'
+                })
+            }
+        }
 
-    console.log(positions);
-
-
-    // case a == 1 & b == 0 & c == 0:
-    //     positions[pos][5] = rotZ(rz)
-    //     break;
-    // case a == 0 & b == 1 & c == 0:
-    //     positions[pos][3] = add180(rx)
-    //     break;
-
-    // case a == 1 & b == 1 & c == 0:
-    //     positions[pos][5] = rotZ(rz)
-    //     break;
-    // case a == 0 & b == 1 & c == 1:
-    //     positions[pos][3] = add180(rx)
-    //     break;
-    // case a == 1 & b == 0 & c == 1:
-    //     positions[pos][5] = rotZ(rz)
-    //     break;
-    // case a == 1 & b == 1 & c == 1:
-    //     positions[pos][3] = add180(rx)
-    //     positions[pos][5] = rotZ(rz)
-    //     break;
+    }
+    //file written successfully
+} catch (err) {
+    console.error(err)
+}
