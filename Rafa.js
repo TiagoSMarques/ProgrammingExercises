@@ -13,11 +13,18 @@ function isData(row) {
 }
 
 function rotZ(value) {
-    let tz = value + (90 - value) * 2
+    let tz = 0.000
+    console.log("aAAAA");
+    if (value > 90 || value < -90) {
+        tz = value + (90 - value) * 2
+    } else {
+        tz = value - (90 - value) * 2
+    }
     if (tz > 180) {
         tz = tz - 360
     }
-    return tz
+    return tz.toFixed(3)
+
 }
 
 function add180(val) {
@@ -25,7 +32,7 @@ function add180(val) {
     if (tx > 180) {
         tx = tx - 360
     }
-    return tx
+    return tx.toFixed(3)
 }
 const file = "CamBRUSELAS_N_RIGHT_B2T_01_path";
 
@@ -50,12 +57,14 @@ let targetQuadrant = 4
 let transfPos = [1 - 2 * a, 1 - 2 * b, 1 - 2 * c]
 
 for (let pos = 0; pos < positions.length; pos++) {
-    positions[pos][0] = positions[pos][0] * transfPos[0]
-    positions[pos][1] = positions[pos][1] * transfPos[1]
-    positions[pos][2] = positions[pos][2] * transfPos[2]
+    positions[pos][0] = (positions[pos][0] * transfPos[0]).toFixed(3)
+    positions[pos][1] = (positions[pos][1] * transfPos[1]).toFixed(3)
+    positions[pos][2] = (positions[pos][2] * transfPos[2]).toFixed(3)
 
     let rx = positions[pos][3];
     let rz = positions[pos][5];
+    positions[pos][4] = positions[pos][4].toFixed(3);
+    positions[pos][5] = positions[pos][5].toFixed(3)
 
     if (a == 1 & b == 0 & (c == 0 || c == 1)) {
         positions[pos][5] = rotZ(rz)
@@ -88,11 +97,11 @@ try {
                 })
             }
         }
-
     }
     //file written successfully
 } catch (err) {
     console.error(err)
 }
+
 
 console.timeEnd("a")
