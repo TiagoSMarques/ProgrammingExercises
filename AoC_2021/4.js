@@ -13,7 +13,7 @@ var BreakException = {};
 //parse input into array of boards and sum all numbers of each one
 for (let i = 1; i < inputData.length; i++) {
     boards[i - 1] = inputData[i].split("\n");
-    let Sum = 0
+    // let Sum = 0
     let aVals = []
     for (let row = 0; row < boards[i - 1].length; row++) {
         boards[i - 1][row] = (boards[i - 1][row].split(" ")).filter(entry => entry.trim() != '').map((x) => parseInt(x));
@@ -21,16 +21,17 @@ for (let i = 1; i < inputData.length; i++) {
             countRow: [0, 0, 0, 0, 0],
             countCol: [0, 0, 0, 0, 0],
             numbersSum: 0,
-            TotalSum: Sum,
-            ArrayOfValues: aVals
+            ArrayOfValues: aVals,
+            TotalSum: 0,
 
         }
         // positions[i-1].ArrayOfValues.push()
         //sum number in each row
         boards[i - 1][row].map((x) => aVals.push(x));
-        Sum = positions[i - 1].TotalSum + boards[i - 1][row].reduce((pv, cv) => pv + cv, 0);
-        positions[i - 1].TotalSum = Sum
+        // Sum = positions[i - 1].TotalSum + boards[i - 1][row].reduce((pv, cv) => pv + cv, 0);
+        // positions[i - 1].TotalSum = Sum
     }
+    positions[i - 1].TotalSum = aVals.reduce((pv, cv) => pv + cv, 0)
 }
 // console.log(positions);
 
@@ -67,7 +68,7 @@ function fillBoard(numberGuess, boards) {
             positions[b].countCol[indexes[1]] += 1;
             // console.log(boards[b].));
             if (positions[b].ArrayOfValues.includes(numberGuess)) {
-                // console.log(boards[b]);
+                console.log(boards[b]);
                 console.log(numberGuess);
                 // console.log(boards[b].indexOf(numberGuess));
                 positions[b].numbersSum += numberGuess
@@ -83,6 +84,7 @@ function fillBoard(numberGuess, boards) {
                     // part2 = (positions[b].TotalSum - positions[b].numbersSum) * numberGuess
                     // console.log(part2);
                     // console.log(boards[b])
+                    console.log(numberGuess);
 
                     break;
                 }
