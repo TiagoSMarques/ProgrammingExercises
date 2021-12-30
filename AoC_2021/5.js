@@ -35,10 +35,9 @@ function getLines(inArray) {
             newArray[0].push(inArray[i]) //vertical
         } else if (y1 == y2) {
             newArray[1].push(inArray[i]) //horizontal
+        } else {
+            newArray[2].push(inArray[i]) //diagonal
         }
-        // else {
-        //     newArray[2].push(inArray[i]) //horizontal
-        // }
         // size of the board
         if (x1 > boardSize[0]) {
             boardSize[0] = x1
@@ -62,35 +61,23 @@ class Board {
 
     }
     fillPositions(posArray) {
-        // fill horizontal
-        for (let p = 0; p < posArray[1].length; p++) {
-            let yPos = posArray[1][p][1]
-            let x1Pos = posArray[1][p][0]
-            let x2Pos = posArray[1][p][2]
-            const lineH = Array(this.width).fill(0)
+        for (let orient = 0; orient < posArray.length; orient++) {
+            // first loop is the vertial 2nd is horizontal, 3rd is diagonal
+            for (let p = 0; p < posArray[orient].length; p++) {
+                let x1 = posArray[orient][p][0]
+                let y1 = posArray[orient][p][1]
+                let x2 = posArray[orient][p][2]
+                let y2 = posArray[orient][p][3]
 
-            let x = checkStart(x1Pos, x2Pos) //first elem is the minimum
+                while (x1 != x2 || y1 != y2) {
 
-            lineH.fill(1, x[0], x[1] + 1)
+                    this.gameB[x1][y1] += 1;
 
-            for (let j = 0; j < lineH.length; j++) {
-                this.gameB[yPos][j] += lineH[j];
-            }
-        }
-        // fill vertical
-        for (let p2 = 0; p2 < posArray[0].length; p2++) {
-            let xPos = posArray[0][p2][0]
-            let y1Pos = posArray[0][p2][1]
-            let y2Pos = posArray[0][p2][3]
-            const lineV = Array(this.height).fill(0)
+                    (x1 < x2) ? x1++ : ((x1 > x2) && x1--);
+                    (y1 < y2) ? y1++ : ((y1 > y2) && y1--);
+                }
 
-            let y = checkStart(y1Pos, y2Pos) //first elem is the minimum
-
-            lineV.fill(1, y[0], y[1] + 1)
-            // console.log(lineV);
-
-            for (let j = 0; j < lineV.length; j++) {
-                this.gameB[j][xPos] += lineV[j];
+                this.gameB[x1][y1] += 1;
             }
         }
         return this.gameB
@@ -110,25 +97,20 @@ inputData.forEach(element => {
 
 const boardSize = [0, 0]
 
+//part 1
+// const filteredPositions = getLines(positions).slice(0, 2)
 
-
+//part 2
 const filteredPositions = getLines(positions)
-const gameBoard = new Board(boardSize[0] + 1, boardSize[1] + 1)
+const gameBoard = new Board(boardSize[1] + 1, boardSize[0] + 1)
+
 const filledBoard = gameBoard.fillPositions(filteredPositions)
+// console.table(filledBoard);
 
 const allNums = []
 filledBoard.map((x) => allNums.push(...x))
 
-const part1 = allNums.filter(x => x >= 2).length
+const ans = allNums.filter(x => x >= 2).length
 console.timeEnd("a")
 
-console.log(part1);
-
-// const allNums
-
-
-
-// console.log(positions);
-console.table(filteredPositions);
-
-// console.log(filledBoard);
+console.log(ans);
