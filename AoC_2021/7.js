@@ -6,7 +6,7 @@ var data = fs.readFileSync("7.txt", 'utf-8')
 
 console.time("a")
 
-//the not clever  way to do it 
+//the not-clever  way to do it 
 
 const hPos = data
 
