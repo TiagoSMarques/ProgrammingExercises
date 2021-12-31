@@ -7,22 +7,12 @@ var data = fs.readFileSync("6.txt", 'utf-8')
 
 console.time("a")
 
-var pop = {
-    0: 0,
-    1: 0,
-    2: 0,
-    3: 0,
-    4: 0,
-    5: 0,
-    6: 0,
-    7: 0,
-    8: 0,
-}
+
+const pop = Array(8).fill(0)
 
 data.map((x) => pop[x] += 1)
 
-// console.table(pop);
-let nextKey, breedCount = 0
+let breedCount = 0
 
 for (let day = 1; day <= 256; day++) {
 
@@ -32,11 +22,10 @@ for (let day = 1; day <= 256; day++) {
     }
 
     //Decrease day by shifting the values 1 key to the left
-    for (key in Object.entries(pop).slice(0, -1)) {
-        nextKey = String(parseInt(key) + 1)
-        pop[key] = pop[nextKey]
+    pop.slice(0, -1).forEach((value, index) => {
+        pop[index] = pop[index + 1]
+    });
 
-    }
     //add the new fish
     pop[8] = 0
     if (breedCount != 0) {
@@ -47,9 +36,7 @@ for (let day = 1; day <= 256; day++) {
 }
 
 //count the total fish
-let t = 0
-for (key in pop) t += pop[key];
+let ans = pop.reduce((a, b) => a + b)
 
 console.timeEnd("a")
-
-console.log(t);
+console.log(ans);
