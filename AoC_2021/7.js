@@ -24,12 +24,14 @@ let median = findMedian(hPos)
 const part1 = hPos.map(x => Math.abs(x - median)).reduce((a, b) => a + b)
 
 let hList = Array(Math.max(...hPos) + 1).fill(0)
-let part2 = 100000000
+let part2 = 1 << 100 //big number
 
+// console.log(part2);
 for (let i = 0; i < hList.length; i++) {
     //sums all combined movements of the crab
-    hList[i] = hPos.map(x => nthTriangular(Math.abs(x - i))).reduce((a, b) => a + b) //part 2
-    if (hList[i] < part2) part2 = hList[i]
+    hList[i] = hPos.map(x => nthTriangular(Math.abs(x - i))).reduce((a, b) => a + b)
+    //part 2
+    part2 = Math.min(hList[i], part2)
 }
 
 console.timeEnd("a")
