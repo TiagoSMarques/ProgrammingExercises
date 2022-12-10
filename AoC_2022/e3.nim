@@ -1,4 +1,6 @@
-import strutils,sequtils
+import strutils,sequtils, times
+# Simple benchmarking
+var t0 = cpuTime()
 
 # transform the char into int 
 proc toNum(com:char):  int =
@@ -53,4 +55,6 @@ for i in countup(0,data.len-3,3):
       break
 
 echo ans2
+
+echo "CPU time [s] ", cpuTime() - t0
     
