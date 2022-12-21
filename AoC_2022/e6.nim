@@ -4,18 +4,25 @@ var t0 = cpuTime()*1000
 
 let data = readFile("6.txt")
 
-var buffer = data[0..2].toDeque
-var ans1 = 3
-
-for i in data[3..^1].items:
-    buffer.addLast(i)
-    inc(ans1)
-
-    if deduplicate(toSeq(buffer)).len == buffer.len:
-        # echo i
-        break
+proc ans(data : string, c : int): int =
     
-    buffer.popFirst()
+    var buffer = data[0..c-2].toDeque
+    var ans = c-1
 
-echo "Answer 1: ", ans1
+    for i in data[c-1..^1].items:
+        buffer.addLast(i)
+        inc(ans)
+
+        if deduplicate(toSeq(buffer)).len == buffer.len:
+            # echo i
+            break
+        
+        buffer.popFirst()
+    ans
+
+
+
+echo "Answer 1: ", ans(data,4)
+echo "Answer 2: ", ans(data,14)
+
 echo "CPU time [ms] ", cpuTime()*1000-t0
