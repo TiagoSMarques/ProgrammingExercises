@@ -1,4 +1,4 @@
-import  sequtils, times, strutils
+import  sequtils, times, strutils, algorithm
 # Simple benchmarking
 var t0 = cpuTime()*1000
 
@@ -39,9 +39,47 @@ proc ans1(rows,cols : seq[seq[int]]): int =
             if counter>=1:inc(ans)
 
     ans
-        
+
+
+proc ans2(rows,cols : seq[seq[int]]): int =    
+    var dist: array[4,int]
+    var left,right,up,down : seq[int]
+    var maxDist=0
+
+    for y,l in rows[1..^2]:
+        for x,val in l[1..^2]:
+            dist=[0,0,0,0]
+            # check left
+            left = rows[y+1][0..x]
+            left.reverse
+            for item in left:
+                inc(dist[0])
+                if item >= val: break
+            # check right
+            right = rows[y+1][x+2..^1]
+            for item in right:
+                inc(dist[1])
+                if item >= val: break
+            # Check up
+            up = cols[x+1][0..y]
+            up.reverse
+            for item in up:
+                inc(dist[2])
+                if item >= val: break
+            # Check down
+            down = cols[x+1][y+2..^1]
+            for idx, item in down:
+                inc(dist[3])
+                if item >= val: break
+
+            var fold= dist.foldl(a*b)
+            if fold > maxDist: maxDist=fold
+    maxDist
+    
 
         
-echo "answer 1: ", ans1(rows,cols)                 
+echo "answer 1: ", ans1(rows,cols)   
+echo "answer 2: ", ans2(rows,cols)                 
+
 
 echo "CPU time [ms] ", cpuTime()*1000-t0
