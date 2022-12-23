@@ -1,4 +1,1 @@
-var quant = 4
-
-for i in 1 .. quant:
-    echo i 
+https://desu-usergeneratedcontent.xyz/g/image/1670/39/1670391366918.png

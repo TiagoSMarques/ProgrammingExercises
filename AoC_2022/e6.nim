@@ -13,10 +13,7 @@ proc ans(data : string, c : int): int =
         buffer.addLast(i)
         inc(ans)
 
-        if deduplicate(toSeq(buffer)).len == buffer.len:
-            # echo i
-            break
-        
+        if deduplicate(toSeq(buffer)).len == buffer.len: break
         buffer.popFirst()
     ans
 
