@@ -23,23 +23,19 @@ proc ans1(rows,cols : seq[seq[int]]): int =
             # check left
             if not rows[y+1][0..x].anyIt(it>=val):
                 inc(counter)
-                # echo "found left " ,   x,y, "  ", val
             # check right
             if not rows[y+1][x+2..^1].anyIt(it>=val):
                 inc(counter)
-                # echo "found right ",  x,y, "  ", val
             # Check up
             if not cols[x+1][0..y].anyIt(it>=val):
                 inc(counter)
-                # echo "found up ",   x,y, "  ", val
             # Check down
             if not cols[x+1][y+2..^1].anyIt(it>=val):
                 inc(counter)
-                # echo "found down ",   x,y, "  ", val
             if counter>=1:inc(ans)
 
     ans
-
+        
 
 proc ans2(rows,cols : seq[seq[int]]): int =    
     var dist: array[4,int]
@@ -76,10 +72,8 @@ proc ans2(rows,cols : seq[seq[int]]): int =
             if fold > maxDist: maxDist=fold
     maxDist
     
-
         
-echo "answer 1: ", ans1(rows,cols)   
-echo "answer 2: ", ans2(rows,cols)                 
-
+echo "Answer 1: ", ans1(rows,cols)   
+echo "Answer 2: ", ans2(rows,cols)                 
 
 echo "CPU time [ms] ", cpuTime()*1000-t0
