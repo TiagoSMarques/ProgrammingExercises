@@ -1,58 +1,80 @@
-import strutils,times,sequtils, re
-
+import strutils,sequtils, times, deques
 # Simple benchmarking
 var t0 = cpuTime()*1000
 
-#splitLines()
+let data = readFile("5.txt").split("\r\n\r")
+var tower=data[0].split("\r\n")
+var nCols = parseInt($tower[^1].filterIt(it != ' ')[^1])
+tower.delete(tower.len-1)
+let nRows= tower.len #8 rows
 
-let data = readFile("5.txt").split("\n\n")
+var rows = tower.distribute(nRows)
+var Board=  newSeqWith(nCols,initDeque[string](nRows))
 
-# var piles = data[0].split("\n\n")[0].split("\n")
-var piles = splitLines(data[0].split("\n\n")[0])
-
-
-#---------Parse the Piles --------------------
-# determinar o numero de colunas 
-var numCols = piles[^1].strip().filterIt(it isnot Natural)[^1]
-# criar a tabela de posições 
-var table = newSeqWith(piles.len-1, newSeq[string]())
-# contar até ao penultimo elem da lista
-for i,row in piles[0..^2]:
-    # separar todos os caracteres da linha e distribuir pelo num de colunas
-    var rowVals = (row.split({' ', '[',']'}).distribute(parseInt($numCols)))
-    # Criar a tablela com os valores em cada linha e coluna table[row][col]
-    for item in rowVals:
-        table[i].add(@[foldl(item, a & b)])
+# Criar a matriz do tabuleiro de jogo 
+for x, row in rows:
+    # separar as linhas pelo nm total de colunas
+    var rowSep = toSeq(row[0].items).distribute(nCols)
+    for y,val in rowSep:
+        # adicionar só a info relevante à matrix
+        if $val[1] != " ":
+            Board[y].addlast($val[1])
 
 
-echo "val: ", table[1][0]
+# Criar a lista de instruções
+let instRaw=data[1].split("\r")
+var instr : seq[array[3,string]]
 
-#---------Parse the Instructions --------------------
-let instr = data[1].split("\n\n")[0].split("\n")
+for ind,step in instRaw:
+    let temp = step.split(" ")
+    instr.add([temp[1],temp[3],temp[5]])
 
-# var input1= instr[0].match(re"\d+").mapIt(parseInt(it))
-var matches: array[3, string]
-var move=0
+var Board1 = Board
+var Board2= Board
 
-for l,line in instr:
-    if match(instr[l], re"move (\d) from (\d) to (\d)", matches):
+proc ans1(boardData: var seq[Deque[string]], instrData:seq[array[3,string]]): string =
+    #Aplicar os movimentos
+    for step in instrData:
 
-        var quant = parseInt(matches[0])
-        var startPile = parseInt(matches[1])
-        var endPile = parseInt(matches[2])
+        let quant = parseInt($step[0])
+        let fromCol= parseInt($step[1]) - 1
+        let toCol=parseInt($step[2]) - 1
 
-        # echo "----",matches
-        for box in 0..<quant:
-            table[box][endPile-1]=table[box][startPile-1]
-            table[box][startPile-1]=""
-            move+=1
-            # echo move
+        for i in 1..quant:
+            boardData[toCol].addFirst(peekFirst(boardData[fromCol]))
+            boardData[fromCol].popFirst()
 
-        echo table
+    #Compute answer 1 
+    var ans : seq[char]
+    for l in 0..nCols-1:
+        ans.add(boardData[l].peekFirst())
+
+    ans.join
+    
+
+proc ans2(boardData: var seq[Deque[string]], instrData:seq[array[3,string]]): string =
+    #Aplicar os movimentos
+    for step in instrData:
+
+        let quant = parseInt($step[0])
+        let fromCol= parseInt($step[1]) - 1
+        let toCol=parseInt($step[2]) - 1
+
+        for i in countdown(quant,1):
+            boardData[toCol].addFirst(boardData[fromCol][i-1])
+            
+        for i in 1..quant: boardData[fromCol].popFirst
+
+    #Compute answer 1 
+    var ans : seq[char]
+    for l in 0..nCols-1:
+        ans.add(boardData[l].peekFirst())
+
+    return ans.join
 
 
+echo "Answer 1: ", ans1(Board1,instr)
+echo "Answer 2: ", ans2(Board2,instr)
 
 
-
-echo "CPU time [ms] ", (cpuTime()*1000 - t0).formatFloat(ffDecimal, 3)
-
+echo "CPU time [ms] ", cpuTime()*1000-t0
