@@ -57,4 +57,3 @@ for i in countup(0,data.len-3,3):
 echo ans2
 
 echo "CPU time [s] ", cpuTime() - t0
-    

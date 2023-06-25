@@ -1,0 +1,120 @@
+# dune build examples2.exe
+# OCAMLPARAM: unset
+# Shared cache: disabled
+# Workspace root:
+# /home/fixo/Documents/Projetos/Pyhon_Proj/Exercicios/Ocaml_Learn/rwo_examples/2-Variables_functions
+# Auto-detected concurrency: 12
+$ /home/fixo/.opam/default/bin/ocamlc.opt -config > /tmp/dune_b9dbf4_output
+# Dune context:
+#  { name = "default"
+#  ; kind = "default"
+#  ; profile = Dev
+#  ; merlin = true
+#  ; for_host = None
+#  ; fdo_target_exe = None
+#  ; build_dir = In_build_dir "default"
+#  ; ocaml_bin = External "/home/fixo/.opam/default/bin"
+#  ; ocaml = Ok External "/home/fixo/.opam/default/bin/ocaml"
+#  ; ocamlc = External "/home/fixo/.opam/default/bin/ocamlc.opt"
+#  ; ocamlopt = Ok External "/home/fixo/.opam/default/bin/ocamlopt.opt"
+#  ; ocamldep = Ok External "/home/fixo/.opam/default/bin/ocamldep.opt"
+#  ; ocamlmklib = Ok External "/home/fixo/.opam/default/bin/ocamlmklib.opt"
+#  ; env =
+#      map
+#        { "DUNE_OCAML_HARDCODED" :
+#            "/home/fixo/.opam/default/lib/ocaml:/home/fixo/.opam/default/lib"
+#        ; "DUNE_OCAML_STDLIB" : "/home/fixo/.opam/default/lib/ocaml"
+#        ; "DUNE_SOURCEROOT" :
+#            "/home/fixo/Documents/Projetos/Pyhon_Proj/Exercicios/Ocaml_Learn/rwo_examples/2-Variables_functions"
+#        ; "INSIDE_DUNE" :
+#            "/home/fixo/Documents/Projetos/Pyhon_Proj/Exercicios/Ocaml_Learn/rwo_examples/2-Variables_functions/_build/default"
+#        ; "OCAMLFIND_IGNORE_DUPS_IN" :
+#            "/home/fixo/Documents/Projetos/Pyhon_Proj/Exercicios/Ocaml_Learn/rwo_examples/2-Variables_functions/_build/install/default/lib"
+#        ; "OCAMLPATH" :
+#            "/home/fixo/Documents/Projetos/Pyhon_Proj/Exercicios/Ocaml_Learn/rwo_examples/2-Variables_functions/_build/install/default/lib"
+#        ; "OCAMLTOP_INCLUDE_PATH" :
+#            "/home/fixo/Documents/Projetos/Pyhon_Proj/Exercicios/Ocaml_Learn/rwo_examples/2-Variables_functions/_build/install/default/lib/toplevel"
+#        ; "OCAML_COLOR" : "always"
+#        ; "OPAMCOLOR" : "always"
+#        }
+#  ; findlib_paths =
+#      [ External "/home/fixo/.opam/default/lib/ocaml"
+#      ; External "/home/fixo/.opam/default/lib"
+#      ]
+#  ; natdynlink_supported = true
+#  ; supports_shared_libraries = true
+#  ; ocaml_config =
+#      { version = "5.0.0"
+#      ; standard_library_default = "/home/fixo/.opam/default/lib/ocaml"
+#      ; standard_library = "/home/fixo/.opam/default/lib/ocaml"
+#      ; standard_runtime = "the_standard_runtime_variable_was_deleted"
+#      ; ccomp_type = "cc"
+#      ; c_compiler = "gcc"
+#      ; ocamlc_cflags =
+#          [ "-O2"; "-fno-strict-aliasing"; "-fwrapv"; "-pthread"; "-fPIC" ]
+#      ; ocamlc_cppflags = [ "-D_FILE_OFFSET_BITS=64" ]
+#      ; ocamlopt_cflags =
+#          [ "-O2"; "-fno-strict-aliasing"; "-fwrapv"; "-pthread"; "-fPIC" ]
+#      ; ocamlopt_cppflags = [ "-D_FILE_OFFSET_BITS=64" ]
+#      ; bytecomp_c_compiler =
+#          [ "gcc"
+#          ; "-O2"
+#          ; "-fno-strict-aliasing"
+#          ; "-fwrapv"
+#          ; "-pthread"
+#          ; "-fPIC"
+#          ; "-D_FILE_OFFSET_BITS=64"
+#          ]
+#      ; bytecomp_c_libraries = [ "-lm"; "-lpthread" ]
+#      ; native_c_compiler =
+#          [ "gcc"
+#          ; "-O2"
+#          ; "-fno-strict-aliasing"
+#          ; "-fwrapv"
+#          ; "-pthread"
+#          ; "-fPIC"
+#          ; "-D_FILE_OFFSET_BITS=64"
+#          ]
+#      ; native_c_libraries = [ "-lm"; "-lpthread" ]
+#      ; native_pack_linker = [ "ld"; "-r"; "-o" ]
+#      ; cc_profile = []
+#      ; architecture = "amd64"
+#      ; model = "default"
+#      ; int_size = 63
+#      ; word_size = 64
+#      ; system = "linux"
+#      ; asm = [ "as" ]
+#      ; asm_cfi_supported = true
+#      ; with_frame_pointers = false
+#      ; ext_exe = ""
+#      ; ext_obj = ".o"
+#      ; ext_asm = ".s"
+#      ; ext_lib = ".a"
+#      ; ext_dll = ".so"
+#      ; os_type = "Unix"
+#      ; default_executable_name = "a.out"
+#      ; systhread_supported = true
+#      ; host = "x86_64-pc-linux-gnu"
+#      ; target = "x86_64-pc-linux-gnu"
+#      ; profiling = false
+#      ; flambda = false
+#      ; spacetime = false
+#      ; safe_string = true
+#      ; exec_magic_number = "Caml1999X032"
+#      ; cmi_magic_number = "Caml1999I032"
+#      ; cmo_magic_number = "Caml1999O032"
+#      ; cma_magic_number = "Caml1999A032"
+#      ; cmx_magic_number = "Caml1999Y032"
+#      ; cmxa_magic_number = "Caml1999Z032"
+#      ; ast_impl_magic_number = "Caml1999M032"
+#      ; ast_intf_magic_number = "Caml1999N032"
+#      ; cmxs_magic_number = "Caml1999D032"
+#      ; cmt_magic_number = "Caml1999T032"
+#      ; natdynlink_supported = true
+#      ; supports_shared_libraries = true
+#      ; windows_unicode = false
+#      }
+#  }
+$ (cd _build/default && /home/fixo/.opam/default/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I .examples2.eobjs/byte -I /home/fixo/.opam/default/lib/base -I /home/fixo/.opam/default/lib/base/base_internalhash_types -I /home/fixo/.opam/default/lib/base/caml -I /home/fixo/.opam/default/lib/base/shadow_stdlib -I /home/fixo/.opam/default/lib/sexplib0 -I /home/fixo/.opam/default/lib/stdio -no-alias-deps -opaque -o .examples2.eobjs/byte/dune__exe__Examples2.cmo -c -impl examples2.ml)
+$ (cd _build/default && /home/fixo/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I .examples2.eobjs/byte -I .examples2.eobjs/native -I /home/fixo/.opam/default/lib/base -I /home/fixo/.opam/default/lib/base/base_internalhash_types -I /home/fixo/.opam/default/lib/base/caml -I /home/fixo/.opam/default/lib/base/shadow_stdlib -I /home/fixo/.opam/default/lib/sexplib0 -I /home/fixo/.opam/default/lib/stdio -intf-suffix .ml -no-alias-deps -opaque -o .examples2.eobjs/native/dune__exe__Examples2.cmx -c -impl examples2.ml)
+$ (cd _build/default && /home/fixo/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -o examples2.exe /home/fixo/.opam/default/lib/base/base_internalhash_types/base_internalhash_types.cmxa -I /home/fixo/.opam/default/lib/base/base_internalhash_types /home/fixo/.opam/default/lib/base/caml/caml.cmxa /home/fixo/.opam/default/lib/sexplib0/sexplib0.cmxa /home/fixo/.opam/default/lib/base/shadow_stdlib/shadow_stdlib.cmxa /home/fixo/.opam/default/lib/base/base.cmxa -I /home/fixo/.opam/default/lib/base /home/fixo/.opam/default/lib/stdio/stdio.cmxa .examples2.eobjs/native/dune__exe__Examples2.cmx)
