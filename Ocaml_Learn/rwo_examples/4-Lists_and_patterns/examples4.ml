@@ -37,6 +37,14 @@ let t_rows =
     [ "ML"; "Robin Milner"; "1973" ];
     [ "OCaml"; "Xavier Leroy"; "1996" ];
   ]
+(*
+   | language | architect      | first release |
+   |----------+----------------+---------------|
+   | Lisp     | John McCarthy  | 1958          |
+   | C        | Dennis Ritchie | 1969          |
+   | ML       | Robin Milner   | 1973          |
+   | OCaml    | Xavier Leroy   | 1996          |
+*)
 
 (* function to compute the maximum width of each column of data *)
 
@@ -44,3 +52,25 @@ let max_widths header rows =
   let lengths l = List.map ~f:String.length l in
   List.fold rows ~init:(lengths header) ~f:(fun acc row ->
       List.map2_exn ~f:Int.max acc (lengths row))
+
+(* Create the line that separates the heder from the rows *)
+(* Create strings of dashes based on the max size for the col *)
+
+let widths = max_widths t_headers t_rows
+
+let buildSep width =
+  let n_dashes = List.map ~f:(fun l -> String.make l '-') width in
+  "|-" ^ String.concat n_dashes ~sep:"-+-" ^ "-|"
+
+let padStr txt_in desired_width =
+  txt_in ^ String.make (desired_width - String.length txt_in) ' '
+
+let render_row row widths_list =
+  List.map2_exn row widths_list ~f:(fun item w -> "| " ^ padStr item w ^ " |")
+;;
+
+printf "seprator :%s \n" (buildSep widths)
+(*
+   let rec buildSep n_dash =
+     let sep = "" in
+     match n_dash with [] -> "" | hd :: tl -> sep ^ hd *)
