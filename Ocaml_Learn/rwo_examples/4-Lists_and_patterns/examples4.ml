@@ -1,5 +1,6 @@
 open Base
 open Stdio
+open Core_bench
 (* open Core_bench *)
 
 let rec find_first_repeat list =
@@ -75,6 +76,31 @@ let print_table header rows =
     (render_row header widths :: buildSep widths :: "\n"
     :: List.map t_rows ~f:(fun r -> render_row r widths))
   |> print_string
+
+(* print_table t_headers t_rows *)
+
+let l_test = [ 1; 2; 3; 0; 1; 2; 0; 1; 0; 3; 4; 1 ]
+let incFirstItem l n = match l with [] -> [] | hd :: tl -> (hd + n) :: tl
+
+let sumCals l =
+  List.fold l ~init:[ 0 ] ~f:(fun acc item ->
+      match item with 0 -> item :: acc | _ -> incFirstItem acc item)
+  |> List.rev
+
+let findMax l_in = List.fold ~init:0 ~f:(fun acc x -> Int.max x acc) l_in
+
+let rec findMax_2 = function
+  | [] -> failwith "Empty list"
+  | [ x ] -> x
+  | hd :: tl -> max hd (findMax_2 tl)
 ;;
 
-print_table t_headers t_rows
+[
+  Bench.Test.create ~name:"Rev_Non_Rec" (fun () -> findMax l_test);
+  Bench.Test.create ~name:"Rev_Rec" (fun () -> findMax_2 l_test);
+]
+|> Bench.bench
+(* ------------------------------------------------------ *)
+(* tests *)
+(* let () = List.iter ~f:(printf "%d ") (sumCals l_test)
+   let () = printf "\n%d\n" (findMax (sumCals l_test)) *)
